@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `app_db`
@@ -30,15 +30,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `academic_years` (
   `id` int(11) NOT NULL,
-  `year` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ปีการศึกษา (เช่น 2568)',
-  `year_thai` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ปีการศึกษา (ภาษาไทย)',
+  `year` varchar(10) COLLATE utf8_general_ci NOT NULL COMMENT 'ปีการศึกษา (เช่น 2568)',
+  `year_thai` varchar(50) COLLATE utf8_general_ci NOT NULL COMMENT 'ปีการศึกษา (ภาษาไทย)',
   `start_date` date NOT NULL COMMENT 'วันที่เริ่มต้นปีการศึกษา',
   `end_date` date NOT NULL COMMENT 'วันที่สิ้นสุดปีการศึกษา',
   `is_active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'สถานะใช้งาน (1=ใช้งาน, 0=ไม่ใช้งาน)',
   `created_by` int(11) NOT NULL COMMENT 'ผู้สร้าง',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ตารางจัดการปีการศึกษา';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ตารางจัดการปีการศึกษา';
 
 --
 -- Dumping data for table `academic_years`
@@ -96,16 +96,16 @@ INSERT INTO `activities` (`id`, `title`, `description`, `start_date`, `end_date`
 
 CREATE TABLE `activity_categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ชื่อหมวดหมู่',
-  `name_thai` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ชื่อหมวดหมู่ (ภาษาไทย)',
-  `description` text COLLATE utf8mb4_unicode_ci COMMENT 'คำอธิบายหมวดหมู่',
-  `color` varchar(7) COLLATE utf8mb4_unicode_ci DEFAULT '#007bff' COMMENT 'สีของหมวดหมู่ (HEX)',
-  `icon` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ไอคอนของหมวดหมู่',
+  `name` varchar(100) COLLATE utf8_general_ci NOT NULL COMMENT 'ชื่อหมวดหมู่',
+  `name_thai` varchar(100) COLLATE utf8_general_ci NOT NULL COMMENT 'ชื่อหมวดหมู่ (ภาษาไทย)',
+  `description` text COLLATE utf8_general_ci COMMENT 'คำอธิบายหมวดหมู่',
+  `color` varchar(7) COLLATE utf8_general_ci DEFAULT '#007bff' COMMENT 'สีของหมวดหมู่ (HEX)',
+  `icon` varchar(50) COLLATE utf8_general_ci DEFAULT NULL COMMENT 'ไอคอนของหมวดหมู่',
   `is_active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'สถานะใช้งาน',
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='หมวดหมู่กิจกรรม';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='หมวดหมู่กิจกรรม';
 
 --
 -- Dumping data for table `activity_categories`
@@ -132,9 +132,9 @@ CREATE TABLE `activity_reschedule_history` (
   `new_start_date` datetime NOT NULL,
   `new_end_date` datetime NOT NULL,
   `rescheduled_by` int(11) NOT NULL,
-  `reason` text COLLATE utf8mb4_unicode_ci COMMENT 'เหตุผลในการเลื่อนวัน',
+  `reason` text COLLATE utf8_general_ci COMMENT 'เหตุผลในการเลื่อนวัน',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ประวัติการเลื่อนวันกิจกรรม';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ประวัติการเลื่อนวันกิจกรรม';
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE `activity_reviews` (
   `organization_rating` int(11) NOT NULL,
   `venue_rating` int(11) NOT NULL,
   `overall_rating` int(11) NOT NULL,
-  `suggestion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `suggestion` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `comment` text COMMENT 'ความคิดเห็นเพิ่มเติม',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -177,12 +177,12 @@ INSERT INTO `activity_reviews` (`id`, `user_id`, `activity_id`, `serial_id`, `fu
 CREATE TABLE `activity_status_history` (
   `id` int(11) NOT NULL,
   `activity_id` int(11) NOT NULL,
-  `old_status` enum('DRAFT','OPEN','CLOSED','CANCELLED') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `new_status` enum('DRAFT','OPEN','CLOSED','CANCELLED') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `old_status` enum('DRAFT','OPEN','CLOSED','CANCELLED') COLLATE utf8_general_ci DEFAULT NULL,
+  `new_status` enum('DRAFT','OPEN','CLOSED','CANCELLED') COLLATE utf8_general_ci NOT NULL,
   `changed_by` int(11) NOT NULL,
-  `reason` text COLLATE utf8mb4_unicode_ci COMMENT 'เหตุผลในการเปลี่ยนสถานะ',
+  `reason` text COLLATE utf8_general_ci COMMENT 'เหตุผลในการเปลี่ยนสถานะ',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ประวัติการเปลี่ยนแปลงสถานะกิจกรรม';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ประวัติการเปลี่ยนแปลงสถานะกิจกรรม';
 
 -- --------------------------------------------------------
 
@@ -192,11 +192,11 @@ CREATE TABLE `activity_status_history` (
 
 CREATE TABLE `activity_tags` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ชื่อแท็ก',
-  `color` varchar(7) COLLATE utf8mb4_unicode_ci DEFAULT '#6c757d' COMMENT 'สีของแท็ก (HEX)',
+  `name` varchar(50) COLLATE utf8_general_ci NOT NULL COMMENT 'ชื่อแท็ก',
+  `color` varchar(7) COLLATE utf8_general_ci DEFAULT '#6c757d' COMMENT 'สีของแท็ก (HEX)',
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='แท็กกิจกรรม';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='แท็กกิจกรรม';
 
 -- --------------------------------------------------------
 
@@ -209,7 +209,7 @@ CREATE TABLE `activity_tag_relations` (
   `activity_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ความสัมพันธ์ระหว่างกิจกรรมกับแท็ก';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ความสัมพันธ์ระหว่างกิจกรรมกับแท็ก';
 
 -- --------------------------------------------------------
 
@@ -246,22 +246,22 @@ INSERT INTO `attendance` (`id`, `activity_id`, `identifier_type`, `identifier_va
 CREATE TABLE `backup_activities` (
   `id` int(11) NOT NULL,
   `original_id` int(11) NOT NULL COMMENT 'ID เดิมของกิจกรรม',
-  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `title` varchar(200) COLLATE utf8_general_ci NOT NULL,
+  `description` text COLLATE utf8_general_ci,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `hours_awarded` int(11) NOT NULL DEFAULT '1',
-  `public_slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `public_slug` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `created_by` int(11) NOT NULL,
-  `status` enum('DRAFT','OPEN','CLOSED','CANCELLED') COLLATE utf8mb4_unicode_ci DEFAULT 'DRAFT',
-  `academic_year` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('DRAFT','OPEN','CLOSED','CANCELLED') COLLATE utf8_general_ci DEFAULT 'DRAFT',
+  `academic_year` varchar(10) COLLATE utf8_general_ci DEFAULT NULL,
   `academic_year_id` int(11) DEFAULT NULL,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `max_participants` int(11) DEFAULT NULL,
   `deleted_by` int(11) NOT NULL COMMENT 'ผู้ลบ',
   `deleted_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'วันที่ลบ',
-  `deletion_reason` text COLLATE utf8mb4_unicode_ci COMMENT 'เหตุผลในการลบ'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='สำรองข้อมูลกิจกรรมที่ถูกลบ';
+  `deletion_reason` text COLLATE utf8_general_ci COMMENT 'เหตุผลในการลบ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='สำรองข้อมูลกิจกรรมที่ถูกลบ';
 
 -- --------------------------------------------------------
 
@@ -512,15 +512,15 @@ CREATE TABLE `sessions` (
 CREATE TABLE `system_logs` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `action` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'การกระทำ (เช่น CREATE_ACTIVITY, UPDATE_ACTIVITY)',
-  `table_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ชื่อตารางที่เกี่ยวข้อง',
+  `action` varchar(100) COLLATE utf8_general_ci NOT NULL COMMENT 'การกระทำ (เช่น CREATE_ACTIVITY, UPDATE_ACTIVITY)',
+  `table_name` varchar(50) COLLATE utf8_general_ci DEFAULT NULL COMMENT 'ชื่อตารางที่เกี่ยวข้อง',
   `record_id` int(11) DEFAULT NULL COMMENT 'ID ของเรคคอร์ดที่เกี่ยวข้อง',
   `old_values` json DEFAULT NULL COMMENT 'ค่าก่อนการเปลี่ยนแปลง',
   `new_values` json DEFAULT NULL COMMENT 'ค่าหลังการเปลี่ยนแปลง',
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `ip_address` varchar(45) COLLATE utf8_general_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8_general_ci,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Log ระบบสำหรับติดตามการทำงาน';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Log ระบบสำหรับติดตามการทำงาน';
 
 -- --------------------------------------------------------
 
@@ -596,7 +596,7 @@ CREATE TABLE `user_activity_hours` (
   `total_hours` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'ชั่วโมงรวมในปีการศึกษา',
   `activity_count` int(11) NOT NULL DEFAULT '0' COMMENT 'จำนวนกิจกรรมที่เข้าร่วม',
   `last_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ชั่วโมงกิจกรรมของนักศึกษาตามปีการศึกษา';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='ชั่วโมงกิจกรรมของนักศึกษาตามปีการศึกษา';
 
 --
 -- Indexes for dumped tables
